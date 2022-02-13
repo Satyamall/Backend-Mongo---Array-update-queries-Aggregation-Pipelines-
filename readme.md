@@ -39,8 +39,8 @@ db.users.aggregate([
 
 
 # 1. insertMany in collection posts.
-
-- db.posts.insertMany([
+```js
+db.posts.insertMany([
     {
         "title": "Masai 101",
         "author_id": "1",
@@ -68,9 +68,10 @@ db.users.aggregate([
         "tags": ["101"]
     }
 ])
-
-# - db.posts.find()
-
+```
+```js
+ db.posts.find()
+```
 **Output->**
 [
   {
@@ -92,9 +93,9 @@ db.users.aggregate([
 ]
 
 # 2. $push. by the help of updateOne.
-
-#  - db.posts.updateOne({_id: ObjectId("6208b9397092788c90649a17")},{$push: {tags: "102"}})
-
+```js
+db.posts.updateOne({_id: ObjectId("6208b9397092788c90649a17")},{$push: {tags: "102"}})
+```
 **Shows->**
 {
   acknowledged: true,
@@ -104,8 +105,9 @@ db.users.aggregate([
   upsertedCount: 0
 }
 
-# - db.posts.find()
-
+```js
+db.posts.find()
+```
 **Output->**
 [
   {
@@ -126,10 +128,12 @@ db.users.aggregate([
   }
 ]
 
-# - db.posts.updateOne({_id: ObjectId("6208b9397092788c90649a17")},{$push: {tags: ["103","Programming"]}})
-
-- db.posts.find()
-
+```js
+db.posts.updateOne({_id: ObjectId("6208b9397092788c90649a17")},{$push: {tags: ["103","Programming"]}})
+```
+```js
+db.posts.find()
+```
 **Output->**
 [
   {
@@ -152,11 +156,12 @@ db.users.aggregate([
 
 
 # 3. $push - $each.
-
-# - db.posts.updateOne({_id: ObjectId("6208b9397092788c90649a17")},{$push: {tags: {$each: ["103","Programming"]}}})
-
-- db.posts.find()
-
+```js
+db.posts.updateOne({_id: ObjectId("6208b9397092788c90649a17")},{$push: {tags: {$each: ["103","Programming"]}}})
+```
+```js
+db.posts.find()
+```
 **Output->**
 [
   {
@@ -179,11 +184,12 @@ db.users.aggregate([
 
 
 # 4. $push - $each - $sort , $slice.
-
-#  - db.posts.updateOne({_id: ObjectId("6208b9397092788c90649a17")},{$push: {tags: {$each: ["104","204"], $sort: {tags: -1},$slice: 3}}})
-
-- db.posts.find()
-
+```js
+db.posts.updateOne({_id: ObjectId("6208b9397092788c90649a17")},{$push: {tags: {$each: ["104","204"], $sort: {tags: -1},$slice: 3}}})
+```
+```js
+db.posts.find()
+```
 **Output->**
 [
   {
@@ -204,11 +210,12 @@ db.users.aggregate([
   }
 ]
 
-
-# -  db.posts.updateOne({_id: ObjectId("6208b9397092788c90649a17")},{$push: {tags: {$each: ["104","204"], $sort: {tags: 1},$slice: 3}}})
-
-- db.posts.find()
-
+```js
+db.posts.updateOne({_id: ObjectId("6208b9397092788c90649a17")},{$push: {tags: {$each: ["104","204"], $sort: {tags: 1},$slice: 3}}})
+```
+```js
+db.posts.find()
+```
 **Output->**
 [
   {
@@ -231,17 +238,18 @@ db.users.aggregate([
 
 
 # 5. New collections students insertMany.
-
-- db.students.insertMany([ { name: "Satya", scores: [96,94,70,67,64] }])   
-
+```js
+db.students.insertMany([ { name: "Satya", scores: [96,94,70,67,64] }])   
+```
 **Output->**
 {
   acknowledged: true,
   insertedIds: { '0': ObjectId("6208bd817092788c90649a18") }
 }
 
-- db.students.find()
-
+```js
+db.students.find()
+```
 **Output->**
 [
   {
@@ -253,11 +261,12 @@ db.users.aggregate([
 
 
 # 6. $push - $each - $sort, $slice with the help of updateOne.
-
-# -  db.students.updateOne({ name: "Satya" }, { $push: { scores: {$each: [35, 100, 45], $sort: { scores: -1 }, $slice: 3 }} })
-
-- db.students.find()
-
+```js
+ db.students.updateOne({ name: "Satya" }, { $push: { scores: {$each: [35, 100, 45], $sort: { scores: -1 }, $slice: 3 }} })
+```
+```js
+ db.students.find()
+```
 **Output->**
 [
   {
@@ -268,11 +277,12 @@ db.users.aggregate([
 ]
 
 # 7. $sort directly apply in push operation and it gives the correct answer.
-
-# - db.students.updateOne({ name: "Satya" }, { $push: { scores: {$each: [35, 100, 45], $sort: -1 , $slice: 3 }} })
-
-- db.students.find()
-
+```js
+db.students.updateOne({ name: "Satya" }, { $push: { scores: {$each: [35, 100, 45], $sort: -1 , $slice: 3 }} })
+```
+```js
+db.students.find()
+```
 **Output->**
 [
   {
@@ -284,11 +294,12 @@ db.users.aggregate([
 
 
 # 8. with collections posts.
-
-# - db.posts.updateOne({title: "Masai 101"},{$push: {comments: {$each: [{body: "Hi", author: "Satya",author_id: "1" },{body: "Nice!",author: "Sid", author_id: "2"}]}}})
-
-- db.posts.find({})
-
+```js
+db.posts.updateOne({title: "Masai 101"},{$push: {comments: {$each: [{body: "Hi", author: "Satya",author_id: "1" },{body: "Nice!",author: "Sid", author_id: "2"}]}}})
+```
+```js
+db.posts.find({})
+```
 **Output->**
 [
   {
@@ -315,11 +326,12 @@ db.users.aggregate([
 
 
 # 9. $pull with the help of updateOne.
-
-# - db.posts.updateOne({title: "Masai 102"},{$pull: {tags: "101"}})
-
-- db.posts.find({})
-
+```js
+db.posts.updateOne({title: "Masai 102"},{$pull: {tags: "101"}})
+```
+```js
+db.posts.find({})
+```
 **Output->**
 [
   {
@@ -344,10 +356,12 @@ db.users.aggregate([
   }
 ]
 
-# - db.posts.updateOne({title: "Masai 101"},{$pull: {tags: {$in: ["101","Programming"]}}})
-
-- db.posts.find({})
-
+```js
+db.posts.updateOne({title: "Masai 101"},{$pull: {tags: {$in: ["101","Programming"]}}})
+```
+```js
+db.posts.find({})
+```
 **Output->**
 [
   {
@@ -372,10 +386,12 @@ db.users.aggregate([
   }
 ]
 
-# - db.posts.updateOne({title: "Masai 102"},{$pull: {tags: {$in: [["103","Programming"]]}}})
-
-- db.posts.find({})
-
+```js
+db.posts.updateOne({title: "Masai 102"},{$pull: {tags: {$in: [["103","Programming"]]}}})
+```
+```js
+db.posts.find({})
+```
 **Output->**
 [
   {
@@ -402,11 +418,12 @@ db.users.aggregate([
 
 
 # 10. $pull with update in collections students.
-
-# - db.students.update({},{$pull: {scores:{$lte: 96}}})
-
--  db.students.find()
-
+```js
+db.students.update({},{$pull: {scores:{$lte: 96}}})
+```
+```js
+db.students.find()
+```
 **Output->**
 [
   {
@@ -418,11 +435,12 @@ db.users.aggregate([
 
 
 # 11. $push - $each - $sort
-
-# - db.students.update({},{$push: {scores:{$each: [100,50,30,20],$sort: -1}}}) 
-
-- db.students.find()
-
+```js
+db.students.update({},{$push: {scores:{$each: [100,50,30,20],$sort: -1}}}) 
+```
+```js
+db.students.find()
+```
 **Output->**
 [
   {
@@ -434,12 +452,13 @@ db.users.aggregate([
 
 
 # 12. $pop.
-
-# -  db.students.update({},{$pop: {scores: 1}}) 
+```js
+db.students.update({},{$pop: {scores: 1}}) 
+```
 - Last element will be remove like stack.
-
-- db.students.find()
-
+```js
+db.students.find()
+```
 **Output->**
 [
   {
@@ -449,11 +468,13 @@ db.users.aggregate([
   }
 ]
 
-# - db.students.update({},{$pop: {scores: -1}})
+```js
+ db.students.update({},{$pop: {scores: -1}})
+ ```
 - Remove from front like queue.
-
-- db.students.find()
-
+```js
+db.students.find()
+```
 **Output->**
 [
   {
@@ -466,11 +487,12 @@ db.users.aggregate([
 
 
 # 13. $addToSet with updateMany.
-
-# - db.students.updateMany({},{$addToSet: {scores: 90}})
-
-- db.students.find()
-
+```js
+db.students.updateMany({},{$addToSet: {scores: 90}})
+```
+```js
+db.students.find()
+```
 **Output->**
 [
   {
@@ -480,12 +502,14 @@ db.users.aggregate([
   }
 ]
 
-# - Add again with the set don't  added.
+# - Add again with the set don't  added the data.
 
-- db.students.updateMany({},{$addToSet: {scores: 90}})
-
--  db.students.find()
-
+```js
+db.students.updateMany({},{$addToSet: {scores: 90}})
+```
+```js
+db.students.find()
+```
 **Output->Still as previous**
 [
   {
@@ -496,11 +520,12 @@ db.users.aggregate([
 ]
 
 # - 100 is already present but it not add 100 once again.
-
-- db.students.updateMany({},{$addToSet: {scores: 100}})
-
-- db.students.find()
-
+```js
+db.students.updateMany({},{$addToSet: {scores: 100}})
+```
+```js
+db.students.find()
+```
 **Output->**
 [
   {
@@ -512,11 +537,12 @@ db.users.aggregate([
 
 
 # 14. $addToSet - $each with updateMany.
-
-# - db.students.updateMany({},{$addToSet: {scores: {$each: [100,50,99,80]}}})
-
-- db.students.find()
-
+```js
+db.students.updateMany({},{$addToSet: {scores: {$each: [100,50,99,80]}}})
+```
+```js
+db.students.find()
+```
 **Output->**
 [
   {
@@ -526,10 +552,12 @@ db.users.aggregate([
   }
 ]
 
-# - db.students.updateMany({},{$push: {scores: {$each: [100,50,99,80]}}})
-
-- db.students.find()
-
+```js
+db.students.updateMany({},{$push: {scores: {$each: [100,50,99,80]}}})
+```
+```js
+db.students.find()
+```
 **Output->**
 [
   {
@@ -554,32 +582,34 @@ db.users.aggregate(
 )
 
 
-# - db.companies.aggregate([{$match: {rating: {$gte: 90}}}])
-
+```js
+db.companies.aggregate([{$match: {rating: {$gte: 90}}}])
+```
 - aggregate all companies and match where rating is greater than 90
 
 
 
 # $group
-
-- db.companies.aggregate([
+```js
+db.companies.aggregate([
     { $match: { rating: {$gte: 90}}},
     { $group: {
         _id: {origin_country: "TH"}
     }}
 ])
-
+```
 **Output->**
 [ { _id: { origin_country: 'TH' } } ]
 
-- db.companies.aggregate([
+```js
+db.companies.aggregate([
     { $match: { rating: {$gte: 90}}},
     { $group: {
         _id: "$origin_country",
         count: {$sum: 1}
     }}
 ])
-
+```
 **Output->**
 [
   { _id: 'KM', count: 1 }, { _id: 'AF', count: 1 },
@@ -595,12 +625,14 @@ db.users.aggregate(
 ]
 Type "it" for more
 
-
- - db.companies.find({origin_country: "CN",rating: {$gte: 90}}).count()
+```js
+ db.companies.find({origin_country: "CN",rating: {$gte: 90}}).count()
+ ```
 **Output->** 19
 
- - db.companies.aggregate([ { $match: { rating: { $gte: 90 } } }, { $group: { _id: "$origin_country", count_abc: { $sum: 1 } } }])
-
+```js
+ db.companies.aggregate([ { $match: { rating: { $gte: 90 } } }, { $group: { _id: "$origin_country", count_abc: { $sum: 1 } } }])
+```
 **Output->**
 [
   { _id: 'KM', count_abc: 1 },
@@ -626,9 +658,9 @@ Type "it" for more
 ]
 Type "it" for more
 
-
-- db.companies.aggregate([ { $match: { rating: { $gte: 90 } } }, { $group: { _id: "$origin_country", count_abc: { $sum: 2 } } }])
-
+```js
+db.companies.aggregate([ { $match: { rating: { $gte: 90 } } }, { $group: { _id: "$origin_country", count_abc: { $sum: 2 } } }])
+```
 **$sum: 2 means multiplying by number 2**
 **Output->**
 [
@@ -655,9 +687,9 @@ Type "it" for more
 ]
 Type "it" for more
 
-
- - db.companies.aggregate([ { $match: { rating: { $gte: 90 } } }, { $group: { _id: "$origin_country", count_abc: { $sum: 2 } , average: {$avg: "$rating"}}}])
-
+```js
+ db.companies.aggregate([ { $match: { rating: { $gte: 90 } } }, { $group: { _id: "$origin_country", count_abc: { $sum: 2 } , average: {$avg: "$rating"}}}])
+```
  **Output->**
  [
   { _id: 'KM', count_abc: 2, average: 98 },
@@ -683,8 +715,9 @@ Type "it" for more
 ]
 Type "it" for more
 
-- db.companies.aggregate([ { $match: { rating: { $gte: 90 } } }, { $group: { _id: "$origin_country", count_abc: { $sum: 2 } , average: {$avg: "$rating"},max: {$max: "$rating"},min: {$min: "$rating"}}}])
-
+```js
+db.companies.aggregate([ { $match: { rating: { $gte: 90 } } }, { $group: { _id: "$origin_country", count_abc: { $sum: 2 } , average: {$avg: "$rating"},max: {$max: "$rating"},min: {$min: "$rating"}}}])
+```
 **Output->**
 [
   { _id: 'KM', count_abc: 2, average: 98, max: 98, min: 98 },
@@ -722,33 +755,33 @@ Type "it" for more
 ]
 Type "it" for more
 
-
-- db.companies.aggregate([ { $match: {origin_country: "CA" } }, { $group: { _id: "$origin_country", count_abc: { $sum: 2 } , average: {$avg: "$rating"}}}])      
-
+```js
+db.companies.aggregate([ { $match: {origin_country: "CA" } }, { $group: { _id: "$origin_country", count_abc: { $sum: 2 } , average: {$avg: "$rating"}}}])      
+```
 **Output->**
 [ { _id: 'CA', count_abc: 34, average: 56.8235294117647 } ]
 
 
 # $limit :
-
--db.companies.aggregate([ { $match: {origin_country: "CA" } },{$limit: 10},{ $group: { _id: "$origin_country", count: { $sum: 1 } , average: {$avg: "$rating"}}}])
-
+```js
+db.companies.aggregate([ { $match: {origin_country: "CA" } },{$limit: 10},{ $group: { _id: "$origin_country", count: { $sum: 1 } , average: {$avg: "$rating"}}}])
+```
 **Output->**
 [ { _id: 'CA', count: 10, average: 48.5 } ]
 
 
 # $sort and $limit :
-
--db.companies.aggregate([ { $match: {origin_country: "CA" } },{$sort: {rating: -1}},{$limit: 10},{ $group: { _id: "$origin_country", count: { $sum: 1 } , average: {$avg: "$rating"}}}])
-
+```js
+db.companies.aggregate([ { $match: {origin_country: "CA" } },{$sort: {rating: -1}},{$limit: 10},{ $group: { _id: "$origin_country", count: { $sum: 1 } , average: {$avg: "$rating"}}}])
+```
 **Output->**
 [ { _id: 'CA', count: 10, average: 78.7 } ]
 
 
 # .explain()
-
--db.companies.aggregate([ { $match: {origin_country: "CA" } },{$sort: {rating: -1}},{$limit: 10},{ $group: { _id: "$origin_country", count_abc: { $sum: 1 } , average: {$avg: "$rating"}}}]).explain()
-
+```js
+db.companies.aggregate([ { $match: {origin_country: "CA" } },{$sort: {rating: -1}},{$limit: 10},{ $group: { _id: "$origin_country", count_abc: { $sum: 1 } , average: {$avg: "$rating"}}}]).explain()
+```
 **Output->**
 {
   explainVersion: '1',
@@ -891,15 +924,17 @@ Type "it" for more
 
 
 # createIndex:
--db.companies.createIndex({origin_country: 1})
-
+```js
+db.companies.createIndex({origin_country: 1})
+```
 **Output->**
 origin_country_1
 
 
 # getIndexes:
--db.companies.getIndexes()
-
+```js
+db.companies.getIndexes()
+```
 **Output->**
 [
   { v: 2, key: { _id: 1 }, name: '_id_' },
@@ -908,13 +943,13 @@ origin_country_1
 
 
 # $group :
-
-- db.companies.aggregate([
+```js
+db.companies.aggregate([
     { $match: {origin_country: "CA"}},
     { $sort: {rating: -1}},
     { $limit: 5}
 ])
-
+```
 **Output->**
 [
   {
@@ -966,9 +1001,9 @@ origin_country_1
 
 
 # $project:
-
-- db.companies.aggregate([ { $match: { origin_country: "CA" } }, { $sort: { rating: -1 } }, { $limit: 5 },{$project: {_id: 0, location: 0}}])
-
+```js
+db.companies.aggregate([ { $match: { origin_country: "CA" } }, { $sort: { rating: -1 } }, { $limit: 5 },{$project: {_id: 0, location: 0}}])
+```
 **Output->**
 [
   {
@@ -1010,14 +1045,15 @@ origin_country_1
 
 
 # sortByCount: 
-
-- db.companies.aggregate([
+```js
+db.companies.aggregate([
     { $match: {origin_country: "CA"}},
     { $sortByCount: "rating"}
 ])
-
--b.companies.aggregate([ { $match: { origin_country: "CA" } }, { $sortByCount: "$rating" }])
-
+```
+```js
+db.companies.aggregate([ { $match: { origin_country: "CA" } }, { $sortByCount: "$rating" }])
+```
 **Output->**
 [
   { _id: 43, count: 2 },
@@ -1037,11 +1073,14 @@ origin_country_1
   { _id: 58, count: 1 }
 ]
 
--db.companies.aggregate([ { $match: { origin_country: "CA" } }, { $sortByCount: "$origin_country" }])
+```js
+db.companies.aggregate([ { $match: { origin_country: "CA" } }, { $sortByCount: "$origin_country" }])
+```
 **Output->** [ { _id: 'CA', count: 17 } ]
 
-- db.companies.aggregate([ { $match: { rating: {$gte: 90} } }, { $sortByCount: "$origin_country" }])
-
+```js
+db.companies.aggregate([ { $match: { rating: {$gte: 90} } }, { $sortByCount: "$origin_country" }])
+```
 **Output->**
 [
   { _id: 'CN', count: 19 }, { _id: 'ID', count: 8 },
@@ -1059,12 +1098,13 @@ Type "it" for more
 
 
 # $group:
--db.companies.aggregate([ 
+```js
+db.companies.aggregate([ 
     { $match: { rating: {$gte: 90} } }, 
     { $group: {_id: "$origin_country", count: {$sum: 1}}},
     { $sort: {count: -1}}
 ])
-
+```
 **Output->**
 [
   { _id: 'CN', count: 19 }, { _id: 'ID', count: 8 },
@@ -1082,14 +1122,14 @@ Type "it" for more
 
 
 # $sort, $limit, $unset
-
-- db.companies.aggregate([ 
+```js
+db.companies.aggregate([ 
     { $match: { rating: { $gte: 50 } } }, 
     { $sort: {rating: 1}},
     {$limit: 10},
     {$unset: "field_name"}
 ])
-
+```
 **$unset means directly show the output**
 **Output->**
 [
@@ -1187,8 +1227,8 @@ Type "it" for more
 
 
 # directly by $group without $match
-
--db.companies.aggregate([{$group: {_id:"$origin_country"}},{$limit: 2}])    
-
+```js
+db.companies.aggregate([{$group: {_id:"$origin_country"}},{$limit: 2}])    
+```
 **Output->**
 [ { _id: 'AF' }, { _id: 'AL' } ]
