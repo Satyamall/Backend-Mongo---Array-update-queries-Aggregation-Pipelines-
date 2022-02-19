@@ -1236,9 +1236,9 @@ db.companies.aggregate([{$group: {_id:"$origin_country"}},{$limit: 2}])
 
 # Notes of Mongo- Array update queries and Aggregation Piplines
 
-#Array Update Operators
+# Array Update Operators
 
-**$push**
+**$push:-**
 The $push operator appends a specified value to an array.
 
 The $push operator has the form:
@@ -1305,7 +1305,7 @@ db.students.updateOne(
 ```
 After the operation only the three highest scoring quizzes are in the array:
 
-
+```js
 {
   "_id" : 5,
   "quizzes" : [
@@ -1314,14 +1314,14 @@ After the operation only the three highest scoring quizzes are in the array:
      { "wk" : 5, "score" : 8 }
   ]
 }
-
-**$pull**
+```
+**$pull:-**
 The $pull operator removes from an existing array all instances of a value or values that match a specified condition.
 
 The $pull operator has the form:
-
+```js
 { $pull: { <field1>: <value|condition>, <field2>: <value|condition>, ... } }
-
+```
 To specify a in an embedded document or in an array, use dot notation.
 
 Starting in MongoDB 5.0, update operators process document fields with string-based names in lexicographic order. Fields with numeric names are processed in numeric order. See Update Operators Behavior for details.
@@ -1356,7 +1356,7 @@ db.stores.updateMany(
 )
 ```
 Result:
-
+```js
 {
   _id: 1,
   fruits: [ 'pears', 'grapes', 'bananas' ],
@@ -1367,6 +1367,7 @@ Result:
   fruits: [ 'plums', 'kiwis', 'bananas' ],
   vegetables: [ 'broccoli', 'zucchini', 'onions' ]
 }
+```
 Remove All Items That Match a Specified $pull Condition
 Create the profiles collection:
 ```js
@@ -1377,15 +1378,16 @@ The following operation will remove all items from the votes array that are grea
 db.profiles.updateOne( { _id: 1 }, { $pull: { votes: { $gte: 6 } } } )
 ```
 After the update operation, the document only has values less than 6:
-
+```js
 { _id: 1, votes: [ 3, 5 ] }
-
-**$pop**
+```
+**$pop:-**
 The $pop operator removes the first or last element of an array. Pass $pop a value of -1 to remove the first element of an array and 1 to remove the last element in an array.
 
 The $pop operator has the form:
-
+```js
 { $pop: { <field>: <-1 | 1>, ... } }
+```
 ```js
 db.students.insertOne( { _id: 1, scores: [ 8, 9, 10 ] } )
 ```
@@ -1397,31 +1399,33 @@ db.students.updateOne( { _id: 1 }, { $pop: { scores: -1 } } )
 db.students.updateOne( { _id: 10 }, { $pop: { scores: 1 } } )
 ```
 // { _id: 10, scores: [ 9 ] }
-**$identifier**
+
+**$identifier:-**
 https://docs.mongodb.com/manual/reference/operator/update/positional-filtered/#mongodb-update-up.---identifier--
-**$[]**
+
+**$[]:-**
 https://docs.mongodb.com/manual/reference/operator/update/positional-all/
 
-**$addToSet**
+**$addToSet:-**
 https://docs.mongodb.com/manual/reference/operator/update/addToSet/
 Update Array modifiers
 Update Operator Modifiers:
 
-**$each**
+**$each:-**
 Modifies the $push and $addToSet operators to append multiple items for array updates.
     
-**$position**
+**$position:-**
 Modifies the $push operator to specify the position in the array to add elements.
     
-**$slice**
+**$slice:-**
 Modifies the $push operator to limit the size of updated arrays.
 
-**$sort**
+**$sort:-**
 Modifies the $push operator to reorder documents stored in an array.
 $sort The $sort modifier orders the elements of an array during a $push operation.
 
 To use the $sort modifier, it must appear with the $each modifier. You can pass an empty array [] to the $each modifier such that only the $sort modifier has an effect.
-
+```js
 {
   $push: {
      <field>: {
@@ -1430,6 +1434,7 @@ To use the $sort modifier, it must appear with the $each modifier. You can pass 
      }
   }
 }
+```
 ```js
 db.students.insertOne(
    {
@@ -1454,7 +1459,7 @@ db.students.updateOne(
    }
 )
 ```
-
+```js
 {
   "_id" : 1,
   "quizzes" : [
@@ -1465,6 +1470,7 @@ db.students.updateOne(
      { "id" : 2, "score" : 9 }
   ]
 }
+```
 Sort Array Elements That Are Not Documents
 ```js
 db.students.insertOne( { "_id" : 2, "tests" : [  89,  70,  89,  50 ] } )
@@ -1513,7 +1519,7 @@ db.students.updateOne(
    }
 )
 ```
-
+```js
 {
   "_id" : 5,
   "quizzes" : [
@@ -1522,30 +1528,31 @@ db.students.updateOne(
      { "wk" : 5, "score" : 8 }
   ]
 }
-#Aggregation
+```
+# Aggregation:- 
 Aggregation operations process multiple documents and return computed results
 
-**Aggregation Pipeline Stages**
+**Aggregation Pipeline Stages:-**
 An aggregation pipeline consists of one or more stages that process documents:
 
 Each stage performs an operation on the input documents. For example, a stage can filter documents, group documents, and calculate values. The documents that are output from a stage are passed to the next stage. An aggregation pipeline can return results for groups of documents. For example, return the total, average, maximum, and minimum values.
 
 In the db.collection.aggregate() method and db.aggregate() method, pipeline stages appear in an array. Documents pass through the stages in sequence.
 
-**Pipeline**
+**Pipeline:-**
 
-**$match**
+**$match:-**
 Filters the documents to pass only the documents that match the specified condition(s) to the next pipeline stage.
 
 The $match stage has the following prototype form:
-
+```js
 { $match: { <query> } }
-
+```
 $match takes a document that specifies the query conditions.
 
 Place the $match as early in the aggregation pipeline as possible. Because $match limits the total number of documents in the aggregation pipeline, earlier $match operations minimize the amount of processing down the pipe.
 
-**$group**
+**$group:-**
 Groups input documents by the specified _id expression and for each distinct grouping, outputs a document. The _id field of each output document contains the unique group by value. The output documents can also contain computed fields that hold the values of some accumulator expression.
 ```js
 {
@@ -1571,7 +1578,7 @@ $count Returns the number of documents in a group. Distinct from the $count pipe
 
 Others
 
-**$project**
+**$project:-**
 Passes along the documents with the requested fields to the next stage in the pipeline. The specified fields can be existing fields from the input documents or newly computed fields.
 
 ```js
@@ -1599,12 +1606,12 @@ db.books.aggregate( [
 ] )
 ```
 Others
-**$sort
-$sortByCount
-$limit
-$sum
-$lookup
-$cond
+**$sort,
+$sortByCount,
+$limit,
+$sum,
+$lookup,
+$cond,
 $expr**
 Aggregation Pipeline Operators
 
@@ -1648,7 +1655,7 @@ db.students.updateOne( { name: "Albert" }, { $push: { scores: { $each: [ 35, 100
 ```js          
 db.posts.updateOne( { title: "Masai 102" }, { $pull: { tags: "101"}} )
 ```
-# $push
+# $push:-
 
 - pushing single values
 - pushing multiple values - $each
@@ -1657,14 +1664,14 @@ db.posts.updateOne( { title: "Masai 102" }, { $pull: { tags: "101"}} )
   - pull a particular value
   - many with condition
   - use $in with pull
-- $pop
+- $pop:-
   - -1, 1
 - $addToSet
 
 - Problem to try:
 - sort without adding or removing anything to an array
 
-# Aggregations
+# Aggregations:-
 ```js
 db.users.aggregate(
 [
@@ -1678,7 +1685,7 @@ $match
 
 db.users.find( { } )
 
-aggreate all companies and mathc where rating is gte 90
+<!--  aggreate all companies and mathc where rating is gte 90: -->
 
 db.companies.aggregate( [ { $match: { rating: { $gte: 90 } } }])
 
